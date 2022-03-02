@@ -278,7 +278,7 @@ The zebra's purpose is to maintain a backup of packet forwarding state, such as 
 
 Since FRR talks with kernel FIB instead of VPP based data plane, to simply FRR integration, existing VPP SYNC plugin will be enhanced to learn MPLS related routes through kernel netlink notifications. See below diagram.
 
- ![](images\syncd.png)  
+ ![](syncd.png)  
 
 SYNC plugin is mainly responsible for listening on netlink socket and acting as a netlink to VPP mapper. It will make sure the kernel FIB and LFIB are in sync with VPP FIB and LFIB. Since SYNC plugin has already supported synchronization of non-MPLS routes for both IPv4 and IPv6, only MPLS related route learning through LDP and MP-BGP protocols are covered in this section. Below are sample use cases. 
 
@@ -348,7 +348,7 @@ GRE tunnel allows UPF, and P router communicate with each other over a different
 
 Below diagram shows how the OSPF/LDP/BGP over GRE works on MDP. 
 
-![](RP over GRE.png)
+![](RP_over_GRE.png)
 
 - Upon receiving the API, MDP shall create a GRE interface on VPP; In the mean time, create a TUN interface in Linux kernel with same name as its counterpart.  
 - The outgoing routing protocol message is handled with below logic
