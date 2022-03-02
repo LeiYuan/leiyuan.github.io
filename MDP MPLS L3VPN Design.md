@@ -14,7 +14,7 @@
 
 Below diagram shows typical network topology for MPLS L3VPN.
 
- ![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\l3vpn_typical_topology.jpg)
+ ![](l3vpn_typical_topology.jpg)
 
 
 
@@ -40,7 +40,7 @@ MDP runs as a PE router sitting at the edge of the MPLS core network. It talks w
 
 The network topology of DTAG campus solution is depicted as below diagram.
 
-![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\DTAG_Campus.png)
+![](DTAG_Campus.png)
 
 
 
@@ -48,7 +48,7 @@ In this solution, RAN nodes are located at campus sites. Mavenir packet core is 
 
 Below diagram shows the logical architecture after mapping DTAG campus solution to MPLS layer 3 VPN topology.
 
-![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\Campus_logic.png)
+![](Campus_logic.png)
 
 
 
@@ -69,7 +69,7 @@ The setup consists of 7 docker containers running on a ubuntu 18.04.6 host serve
 
 Below diagram depicts the topology of the reference network. Although only IPv4 is discussed in this document, IPv6 also needs to be supported in this feature.     
 
-![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\frr_simu_setup.png)
+![](frr_simu_setup.png)
 
 
 
@@ -252,11 +252,11 @@ Following 2 diagrams show how ping/ICMP Echo Request and Response packets betwee
 
 ##### ICMP Echo Request:
 
-![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\ping_request.png)
+![](ping_request.png)
 
 ##### ICMP Echo Response:
 
-![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\ping_reply.png)
+![](ping_reply.png)
 
 ## 3. Design
 
@@ -264,7 +264,7 @@ Following 2 diagrams show how ping/ICMP Echo Request and Response packets betwee
 
 To maximum packet processing performance and lower its latency on Fast Path, we adopted a control plane and data plane separated architecture. CPU cores on the system(bare metal, VM or Container) are divided and dispatched to control plane applications and Fast Path respectively.  Below diagram depicts overall MDP architecture after adding dynamic routing protocol suite(drpd) into it by FRR integration.
 
-![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\mdp_arch_w_frr.png)
+![](mdp_arch_w_frr.png)
 
 As we can see, DPRD/FRR is running on MDP control plane. It starts all the configured routing protocol daemons and handle all routing messages. The best routes selected from active routes learned from various routing daemons are installed into kernel FIB using netlink. DPRD also provide GRPC APIs for configuration itself and telemetry purpose.  
 
@@ -278,7 +278,7 @@ The zebra's purpose is to maintain a backup of packet forwarding state, such as 
 
 Since FRR talks with kernel FIB instead of VPP based data plane, to simply FRR integration, existing VPP SYNC plugin will be enhanced to learn MPLS related routes through kernel netlink notifications. See below diagram.
 
- ![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\syncd.png)  
+ ![](images\syncd.png)  
 
 SYNC plugin is mainly responsible for listening on netlink socket and acting as a netlink to VPP mapper. It will make sure the kernel FIB and LFIB are in sync with VPP FIB and LFIB. Since SYNC plugin has already supported synchronization of non-MPLS routes for both IPv4 and IPv6, only MPLS related route learning through LDP and MP-BGP protocols are covered in this section. Below are sample use cases. 
 
@@ -348,7 +348,7 @@ GRE tunnel allows UPF, and P router communicate with each other over a different
 
 Below diagram shows how the OSPF/LDP/BGP over GRE works on MDP. 
 
-![](D:\Project\5G\MDP\Design\VRF & MPLS VPN\MD\images\RP over GRE.png)
+![](RP over GRE.png)
 
 - Upon receiving the API, MDP shall create a GRE interface on VPP; In the mean time, create a TUN interface in Linux kernel with same name as its counterpart.  
 - The outgoing routing protocol message is handled with below logic
